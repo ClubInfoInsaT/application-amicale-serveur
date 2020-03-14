@@ -1,0 +1,10 @@
+{
+  "endNotification": {
+    "title": "Machine n°%s terminée",
+    "body": "Vous pouvez venir chercher votre linge dans la machine n°%s"
+  },
+  "reminderNotification": {
+    "title": "Machine n°%s en cours...",
+    "body": "N'oubliez pas votre linge dans la machine n°%s"
+  }
+}

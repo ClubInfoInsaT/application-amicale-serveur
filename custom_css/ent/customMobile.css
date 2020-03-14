@@ -1,0 +1,15 @@
+#columns-table > tbody > tr > td {
+
+    display: block;
+
+    width: 100%;
+
+}
+
+
+
+.portlet {
+
+    padding : 5px;
+
+}

@@ -1,0 +1,6 @@
+#/bin/bash!
+
+touch lock
+#curl "https://graph.facebook.com/v3.3/amicale.deseleves/posts?fields=message%2Cfull_picture%2Ccreated_time%2Cpermalink_url&&date_format=U&access_token=EAAGliUs4Ei8BAGwHmg7SNnosoEDMuDhP3i5lYOGrIGzZBNeMeGzGhpUigJt167cKXEIM0GiurSgaC0PS4Xg2GBzOVNiZCfr8u48VVB15a9YbOsuhjBqhHAMb2sz6ibwOuDhHSvwRZCUpBZCjmAW12e7RjWJp0jvyNoYYvIQbfaLWi3Nk2mBc" > facebook_data.json
+curl "https://graph.facebook.com/v6.0/amicale.deseleves/published_posts?fields=full_picture,message,permalink_url,created_time&date_format=U&access_token=EAAGliUs4Ei8BAGwHmg7SNnosoEDMuDhP3i5lYOGrIGzZBNeMeGzGhpUigJt167cKXEIM0GiurSgaC0PS4Xg2GBzOVNiZCfr8u48VVB15a9YbOsuhjBqhHAMb2sz6ibwOuDhHSvwRZCUpBZCjmAW12e7RjWJp0jvyNoYYvIQbfaLWi3Nk2mBc" > facebook_data.json
+rm lock

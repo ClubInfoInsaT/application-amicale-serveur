@@ -1,0 +1,52 @@
+body, body > .container2 {
+    padding-top: 0;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+tbody tr, header, b, br, body > .container2 > h3, body > .container2 > h1 {
+    display: none;
+}
+
+.table-bordered td, .table-bordered th {
+    border: none;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table {
+    padding: 0;
+    margin: 0;
+    width: 200%;
+    max-width: 200%;
+    display: block;
+}
+
+tbody {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    height: calc(100vh - 50px);
+}
+
+thead {
+    display: block;
+    width: 100%;
+}
+
+tbody tr[bgcolor], thead tr {
+    width: 100%;
+    display: inline-flex;
+}
+
+.table tbody td, .table thead td[colspan] {
+    padding: 0;
+    flex: 1;
+    height: 50px;
+    margin: 0;
+}
+
+.table tbody td[bgcolor="white"], .table thead td {
+    flex: 0 0 150px;
+    height: 50px;
+}

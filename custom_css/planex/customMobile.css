@@ -1,0 +1,98 @@
+body > .container {
+    padding-top: 30px;
+}
+
+header {
+    display: none;
+}
+
+.fc-toolbar .fc-center {
+    width: 100%;
+}
+.fc-toolbar .fc-center > * {
+    float: none;
+    width: 100%;
+    margin: 0;
+}
+
+#rotateToLandscape {
+display: none;
+}
+
+#rotateToPortrait{
+display: block;
+}
+
+
+@media only screen and (max-width: 575px) {
+    body > .container {
+        padding-top: 10px;
+    }
+    
+    
+    #rotateToLandscape {
+    display: block;
+    }
+    
+    #rotateToPortrait{
+    display: none;
+    }
+    
+    #calendar .fc-view-container {
+    overflow: auto;
+    }
+    
+    #calendar .fc-agendaWeek-view {
+    width: 225%;
+    }
+    
+    #calendar .fc-month-view {
+    width: 250%;
+    }
+    
+    #entite {
+    margin-bottom: 5px !important;
+    }
+    
+    #entite,
+    #groupe,
+    #calendar .fc-left,
+    #calendar .fc-right {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    }
+    
+    #calendar .fc-right .fc-button-group {
+    margin: 0;
+    }
+    
+    #calendar .fc-button {
+    margin: 2px 0;
+    }
+    
+    #calendar .fc-left .fc-button-group {
+    float: right;
+    }
+    
+    #calendar .fc-left .fc-button-group .fc-button {
+    font-size: 1.2rem;
+    margin: 0 0 0 5px;
+    }
+    
+    #groupe_visibility {
+    width: 100%;
+    }
+    
+    #calendar .fc-agendaWeek-view .fc-content-skeleton .fc-title {
+    font-size: 0.7rem
+    }
+    
+    .tooltiptopicevent h1 {
+        font-size: 1rem;
+    }
+    
+    .tooltiptopicevent {
+        border-radius: 0.2rem;
+        border: solid 1px #717171;
+    }
+}

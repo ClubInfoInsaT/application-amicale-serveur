@@ -1,0 +1,53 @@
+.navbar,.hero-unit, footer {
+    display:none;
+}
+
+.hero-unit3, .hero-unit2, .hero-unit-form {
+    background-color: #fff;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hero-unit-form h4 {
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+.btn {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    padding: 20px;
+}
+
+.btn-danger {
+    background-image: none;
+    background-color: #be1522;
+}
+
+.table {
+    font-size: 0.8rem;
+}
+
+.table td {
+    padding: 0;
+    height: 18.2333px;
+    border: none;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.table td[style="max-width:55px;"] {
+    max-width: 110px !important;
+}
+
+.table-bordered {
+    min-width: 50px;
+}
+
+th {
+    height: 50px;
+}
+
+.table-bordered {
+    border-collapse: collapse;
+}

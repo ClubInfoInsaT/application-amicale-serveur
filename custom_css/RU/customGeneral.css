@@ -1,0 +1,14 @@
+body {
+	font-size: 1.5rem;
+	text-shadow: none;
+	font-family: 'Roboto';
+}
+
+
+#ru_page {
+	padding: 5px !important;
+}
+
+.ui-bar, header {
+	display: none;
+}
