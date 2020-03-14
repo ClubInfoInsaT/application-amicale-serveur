@@ -1,4 +1,4 @@
-#/bin/bash!
+#!/bin/bash
 
 # *     *     *     *     *  command to be executed
 # -     -     -     -     -

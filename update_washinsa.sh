@@ -1,4 +1,4 @@
-#/bin/bash!
+#!/bin/bash
 
 cd $HOME/public_html/washinsa
 # update washing machine list
