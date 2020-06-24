@@ -3,8 +3,7 @@
 
 from bs4 import BeautifulSoup
 import urllib.request
-from enum import Enum, auto
-import pprint
+from enum import Enum
 import re
 import json
 
