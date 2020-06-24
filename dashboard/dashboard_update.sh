@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update washing machines
-cd "$HOME"/public_html/washinsa && ./washinsa_update.sh
+cd "$HOME"/public_html/v2/washinsa && ./washinsa_update.sh
 
 # Update the dashboard with the new machine list
 touch lock
