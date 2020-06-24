@@ -28,14 +28,19 @@
 # @midnight  #Runs once a day [0 0 * * *]
 # @hourly  #Runs once an hour [0 * * * *]
 
-* * * * * cd $HOME/public_html/facebook/ && ./facebook_update.sh >/dev/null 2>&1
-# Call 2 times, one with a 30 sec delay
-* * * * * cd $HOME/public_html/ && ./update_washinsa.sh >/dev/null 2>&1
-* * * * * cd $HOME/public_html/ && (sleep 30 ; ./update_washinsa.sh) >/dev/null 2>&1
+# Update the menu every day
+0 0 * * * cd "$HOME"/public_html/v2/menu/ && ./menu_update.sh >/dev/null 2>&1
 
-0 0 * * * cd $HOME/public_html/menu/ && ./menu_update.sh >/dev/null 2>&1
+# Update facebook data every minute
+* * * * * cd "$HOME"/public_html/v2/facebook/ && ./facebook_update.sh >/dev/null 2>&1
 
-# Add at the end of the command to stop emails
+# Update the dashboard every 20 sec. The dashboard also update the machine list
+# Call 3 times, one with a 20 sec delay, and one with 40 sec, because cron cannot call more than each minute
+* * * * * cd "$HOME"/public_html/v2/dashboard && ./dashboard_update.sh >/dev/null 2>&1
+* * * * * cd "$HOME"/public_html/v2/dashboard && (sleep 20 ; ./dashboard_update.sh) >/dev/null 2>&1
+* * * * * cd "$HOME"/public_html/v2/dashboard && (sleep 40 ; ./dashboard_update.sh) >/dev/null 2>&1
+
+# To stop emails, add the following at the end of each command:
 # >/dev/null 2>&1
 
 
