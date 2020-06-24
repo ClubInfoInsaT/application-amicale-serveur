@@ -19,6 +19,28 @@ PLANNING_URL = 'https://amicale-insat.fr/event/json/list'
 DASHBOARD_FILE = 'dashboard_data.json'
 
 
+def get_news_feed():
+    """
+    Get facebook news and truncate the data to 15 entries for faster loading
+
+    :return: an object containing the facebook feed data
+    """
+    # Prevent concurrent access to file
+    while os.path.isfile(FACEBOOK_LOCK):
+        print("Waiting for Facebook lock")
+    try:
+        with open(FACEBOOK_FILE) as f:
+            data = json.load(f)
+            if 'data' in data and len(data['data']) > 15:
+                del data['data'][14:]
+            else:
+                data = {'data': []}
+            return data
+    except FileNotFoundError:
+        print("Could not find " + FACEBOOK_FILE)
+        return {'data': []}
+
+
 def get_available_machines():
     """
     Get the number of available washing/drying machines
@@ -28,16 +50,20 @@ def get_available_machines():
     # Prevent concurrent access to file
     while os.path.isfile(WASHINSA_LOCK):
         print("Waiting for washinsa lock")
-    with open(WASHINSA_FILE) as f:
-        data = json.load(f)
-        available_dryers = 0
-        available_washers = 0
-        for machine in data['dryers']:
-            if machine['state'] == 'DISPONIBLE':
-                available_dryers += 1
-        for machine in data['washers']:
-            if machine['state'] == 'DISPONIBLE':
-                available_washers += 1
+    try:
+        with open(WASHINSA_FILE) as f:
+            data = json.load(f)
+            available_dryers = 0
+            available_washers = 0
+            for machine in data['dryers']:
+                if machine['state'] == 'DISPONIBLE':
+                    available_dryers += 1
+            for machine in data['washers']:
+                if machine['state'] == 'DISPONIBLE':
+                    available_washers += 1
+    except FileNotFoundError:
+        print("Could not find " + WASHINSA_FILE)
+        return 0, 0
     return available_dryers, available_washers
 
 
@@ -50,14 +76,18 @@ def get_today_menu():
     # Prevent concurrent access to file
     while os.path.isfile(MENU_LOCK):
         print("Waiting for menu lock")
-    with open(MENU_FILE) as f:
-        data = json.load(f)
-        menu = []
-        for i in range(0, len(data)):
-            if data[i]['date'] == date.today().strftime('%Y-%m-%d'):
-                menu = data[i]['meal'][0]['foodcategory']
-                break
-        return menu
+    try:
+        with open(MENU_FILE) as f:
+            data = json.load(f)
+            menu = []
+            for i in range(0, len(data)):
+                if data[i]['date'] == date.today().strftime('%Y-%m-%d'):
+                    menu = data[i]['meal'][0]['foodcategory']
+                    break
+            return menu
+    except FileNotFoundError:
+        print("Could not find " + MENU_FILE)
+        return []
 
 
 def get_proximo_article_number():
@@ -66,13 +96,17 @@ def get_proximo_article_number():
 
     :return: an integer representing the number of articles
     """
-    with urllib.request.urlopen(PROXIMO_URL) as response:
-        data = json.loads(response.read().decode())
-        count = 0
-        for article in data['articles']:
-            if int(article['quantity']) > 0:
-                count += 1
-        return count
+    try:
+        with urllib.request.urlopen(PROXIMO_URL) as response:
+            data = json.loads(response.read().decode())
+            count = 0
+            for article in data['articles']:
+                if int(article['quantity']) > 0:
+                    count += 1
+            return count
+    except:
+        print("Error processing following url: " + PROXIMO_URL)
+        return 0
 
 
 def get_tutorinsa_tutoring_number():
@@ -86,6 +120,7 @@ def get_tutorinsa_tutoring_number():
             data = json.loads(response.read().decode())
             return int(data['tutorials_number'])
     except:
+        print("Error processing following url: " + TUTORINSA_URL)
         return 0
 
 
@@ -104,26 +139,8 @@ def get_today_events():
                     today_events.append(event)
             return today_events
     except:
+        print("Error processing following url: " + PLANNING_URL)
         return []
-
-
-def get_news_feed():
-    """
-    Get facebook news and truncate the data to 15 entries for faster loading
-
-    :return: an object containing the facebook feed data
-    """
-    # Prevent concurrent access to file
-    while os.path.isfile(FACEBOOK_LOCK):
-        print("Waiting for Facebook lock")
-    with open(FACEBOOK_FILE) as f:
-        data = json.load(f)
-        if 'data' in data and len(data['data']) > 15:
-            del data['data'][14:]
-        else:
-            data = {'data': []}
-        return data
-
 
 def generate_dashboard_json():
     """
