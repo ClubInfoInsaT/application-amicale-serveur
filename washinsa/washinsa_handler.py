@@ -40,6 +40,7 @@ class State(Enum):
 STATE_CONVERSION_TABLE = {
     "DISPONIBLE": State.AVAILABLE,
     "TERMINE": State.FINISHED,
+    "REGLE": State.RUNNING_NOT_STARTED,
     "HORS SERVICE": State.UNAVAILABLE,
     "ERREUR": State.ERROR,
 }
