@@ -3,7 +3,7 @@ from datetime import date
 import urllib.request
 import os.path
 
-WASHINSA_FILE = '../washinsa/washinsa.json'
+WASHINSA_FILE = '../washinsa/washinsa_data.json'
 MENU_FILE = '../menu/menu_data.json'
 FACEBOOK_FILE = '../facebook/facebook_data.json'
 
@@ -56,10 +56,10 @@ def get_available_machines():
             available_dryers = 0
             available_washers = 0
             for machine in data['dryers']:
-                if machine['state'] == 'DISPONIBLE':
+                if machine['state'] == 0:
                     available_dryers += 1
             for machine in data['washers']:
-                if machine['state'] == 'DISPONIBLE':
+                if machine['state'] == 0:
                     available_washers += 1
     except FileNotFoundError:
         print("Could not find " + WASHINSA_FILE)

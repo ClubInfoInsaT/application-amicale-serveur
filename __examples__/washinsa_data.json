@@ -1,0 +1,114 @@
+{
+  "dryers": [
+    {
+      "number": "1",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "2",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "3",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    }
+  ],
+  "washers": [
+    {
+      "number": "4",
+      "donePercent": "68.9",
+      "startTime": "11:32",
+      "state": 1,
+      "program": "Couleurs 60\u00b0C & Lessive Automatique",
+      "endTime": "12:21",
+      "remainingTime": "15"
+    },
+    {
+      "number": "5",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "6",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "7",
+      "donePercent": "",
+      "startTime": "",
+      "state": 3,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "8",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "9",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "10",
+      "donePercent": "58.2",
+      "startTime": "11:39",
+      "state": 1,
+      "program": "Non repassable 40\u00b0C",
+      "endTime": "12:24",
+      "remainingTime": "19"
+    },
+    {
+      "number": "11",
+      "donePercent": "",
+      "startTime": "",
+      "state": 0,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    },
+    {
+      "number": "12",
+      "donePercent": "",
+      "startTime": "",
+      "state": 4,
+      "program": "",
+      "endTime": "",
+      "remainingTime": ""
+    }
+  ]
+}
