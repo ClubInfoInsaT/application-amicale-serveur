@@ -30,12 +30,7 @@ def get_news_feed():
         print("Waiting for Facebook lock")
     try:
         with open(FACEBOOK_FILE) as f:
-            data = json.load(f)
-            if 'data' in data and len(data['data']) > 15:
-                del data['data'][14:]
-            else:
-                data = {'data': []}
-            return data
+            return json.load(f)
     except FileNotFoundError:
         print("Could not find " + FACEBOOK_FILE)
         return {'data': []}

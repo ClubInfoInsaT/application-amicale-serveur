@@ -9,9 +9,9 @@ def scrape_data():
     for post in facebook_scraper.get_posts('amicale.deseleves', pages=3):
         print(post)
         cleaned_post = {
-            "post_id": post["post_id"],
-            "post_text": post["post_text"],
-            "post_url": post["post_url"],
+            "id": post["post_id"],
+            "message": post["post_text"],
+            "url": post["post_url"],
             "image": post["image"],
             "video": post["video"],
             "link": post["link"],
