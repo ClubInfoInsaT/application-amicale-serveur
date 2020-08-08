@@ -1,12 +1,12 @@
 import json
-from facebook_scraper import get_posts
+import facebook_scraper
 
 FILE = 'facebook_data.json'
 
 
 def scrape_data():
     post_list = []
-    for post in get_posts('amicale.deseleves', pages=3):
+    for post in facebook_scraper.get_posts('amicale.deseleves', pages=3):
         print(post)
         cleaned_post = {
             "post_id": post["post_id"],
