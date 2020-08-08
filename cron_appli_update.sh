@@ -31,8 +31,8 @@
 # Update the menu every day
 0 0 * * * cd "$HOME"/public_html/v2/menu/ && ./menu_update.sh >/dev/null 2>&1
 
-# Update facebook data every minute
-* * * * * cd "$HOME"/public_html/v2/facebook/ && ./facebook_update.sh >/dev/null 2>&1
+# Update facebook data every 5 minute
+5 * * * * cd "$HOME"/public_html/v2/facebook/ && ./facebook_update.sh >/dev/null 2>&1
 
 # Update the dashboard every 20 sec. The dashboard also update the machine list
 # Call 3 times, one with a 20 sec delay, and one with 40 sec, because cron cannot call more than each minute
