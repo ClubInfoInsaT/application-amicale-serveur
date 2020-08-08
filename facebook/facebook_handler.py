@@ -18,6 +18,7 @@ def scrape_data(page):
             "video": post["video"],
             "link": post["link"],
             "time": post["time"].timestamp(),
+            "page_id": page,
         }
         post_list.append(cleaned_post)
     return post_list
