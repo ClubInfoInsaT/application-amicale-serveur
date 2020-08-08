@@ -1,12 +1,14 @@
 import json
 import facebook_scraper
+import enum
 
 FILE = 'facebook_data.json'
 
+PAGES = ["amicale.deseleves", "campus.insat"]
 
-def scrape_data():
+def scrape_data(page):
     post_list = []
-    for post in facebook_scraper.get_posts('amicale.deseleves', pages=3):
+    for post in facebook_scraper.get_posts(page, pages=3):
         print(post)
         cleaned_post = {
             "id": post["post_id"],
@@ -21,6 +23,13 @@ def scrape_data():
     return post_list
 
 
+def get_all_data():
+    data = {}
+    for page in PAGES:
+        data[page] = scrape_data(page)
+    return data
+
+
 def write_data(data):
     with open(FILE, 'w') as f:
         json.dump(data, f)
@@ -28,7 +37,7 @@ def write_data(data):
 
 def main():
     print("Fetching facebook data...")
-    write_data(scrape_data())
+    write_data(get_all_data())
     print('DONE')
 
 
