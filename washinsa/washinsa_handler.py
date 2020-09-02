@@ -21,8 +21,8 @@ Each machine row is composed of 6 columns
  - 6 - End time (The end time in format HH:MM or empty)
 '''
 
-DUMP_FILE = "washinsa_data.json"
-DUMP_FILE_V2 = "washinsa_data_V2.json"
+DUMP_FILE_INSA = "washinsa_data.json"
+DUMP_FILE_TRIPODE_B = "tripode_b_data.json"
 WASHINSA_URL = "https://www.proxiwash.com/weblaverie/component/weblaverie/?view=instancesfiche&format=raw&s="
 DRYER_STRING = "SECHE LINGE"
 
@@ -213,17 +213,10 @@ def get_parsed_data(rows):
 
 
 def main():
-    insa = get_json("cf4f39")
-    with open(DUMP_FILE, 'w') as f:
-        json.dump(insa, f)
-
-    tripodeB = get_json("b310b7")
-    washs = {
-        "insa": insa,
-        "tripodeB": tripodeB,
-    }
-    with open(DUMP_FILE_V2, 'w') as f:
-        json.dump(washs, f)
+    with open(DUMP_FILE_INSA, 'w') as f:
+        json.dump(get_json("cf4f39"), f)
+    with open(DUMP_FILE_TRIPODE_B, 'w') as f:
+        json.dump(get_json("b310b7"), f)
 
 
 main()
