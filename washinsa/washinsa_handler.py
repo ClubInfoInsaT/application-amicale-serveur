@@ -22,7 +22,8 @@ Each machine row is composed of 6 columns
 '''
 
 DUMP_FILE = "washinsa_data.json"
-WASHINSA_URL = "https://www.proxiwash.com/weblaverie/component/weblaverie/?view=instancesfiche&format=raw&s=cf4f39"
+DUMP_FILE_V2 = "washinsa_data_V2.json"
+WASHINSA_URL = "https://www.proxiwash.com/weblaverie/component/weblaverie/?view=instancesfiche&format=raw&s="
 DRYER_STRING = "SECHE LINGE"
 
 
@@ -48,12 +49,18 @@ STATE_CONVERSION_TABLE = {
 TIME_RE = re.compile("^\d\d:\d\d$")
 
 
-def download_page():
+def get_json(code):
+    soup = BeautifulSoup(download_page(code), 'html.parser')
+    rows = get_rows(soup)
+    return get_parsed_data(rows)
+
+
+def download_page(code):
     """
     Downloads the page from proxiwash website
     """
     try:
-        with urllib.request.urlopen(WASHINSA_URL) as response:
+        with urllib.request.urlopen(WASHINSA_URL + code) as response:
             return response.read().decode()
     except:
         print("Error processing following url: " + WASHINSA_URL)
@@ -206,13 +213,17 @@ def get_parsed_data(rows):
 
 
 def main():
-    soup = BeautifulSoup(download_page(), 'html.parser')
-    rows = get_rows(soup)
+    insa = get_json("cf4f39")
     with open(DUMP_FILE, 'w') as f:
-        json.dump(get_parsed_data(rows), f)
+        json.dump(insa, f)
+
+    tripodeB = get_json("b310b7")
+    washs = {
+        "insa": insa,
+        "tripodeB": tripodeB,
+    }
+    with open(DUMP_FILE_V2, 'w') as f:
+        json.dump(washs, f)
 
 
 main()
-
-
-
