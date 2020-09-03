@@ -85,6 +85,13 @@ def is_machine_dryer(row):
     return DRYER_STRING in row.contents[0].text
 
 
+def get_machine_weight(row):
+    """
+    Find the maximum weight supported by the machine.
+    """
+    return int(re.search("LINGE (.*?) KG", row.contents[0].text).group(1))
+
+
 def get_machine_number(row):
     """
     Gets the current machine number.
@@ -184,6 +191,7 @@ def get_parsed_data(rows):
         machine = {
             "number": get_machine_number(row),
             "state": state.value,
+            "maxWeight ": get_machine_weight(row),
             "startTime": "",
             "endTime": "",
             "donePercent": "",
