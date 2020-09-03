@@ -59,11 +59,12 @@ def download_page(code):
     """
     Downloads the page from proxiwash website
     """
+    url = WASHINSA_URL + code
     try:
-        with urllib.request.urlopen(WASHINSA_URL + code) as response:
+        with urllib.request.urlopen(url) as response:
             return response.read().decode()
     except:
-        print("Error processing following url: " + WASHINSA_URL)
+        print("Error processing following url: " + url)
         return ""
 
 
