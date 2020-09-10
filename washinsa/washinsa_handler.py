@@ -192,7 +192,7 @@ def get_parsed_data(rows):
         machine = {
             "number": get_machine_number(row),
             "state": state.value,
-            "maxWeight ": get_machine_weight(row),
+            "maxWeight": get_machine_weight(row),
             "startTime": "",
             "endTime": "",
             "donePercent": "",
