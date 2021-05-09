@@ -181,40 +181,51 @@ def get_machine_remaining_time(row):
     return time
 
 
+def is_machine_parsed(dryers, washers, number):
+    for m in dryers:
+        if m["number"] == number:
+            return True
+    for m in washers:
+        if m["number"] == number:
+            return True
+    return False
+
+
 def get_parsed_data(rows):
     """
-    Gets the parsed data from the web page, farmatting it in a easy to use object
+    Gets the parsed data from the web page, formatting it in a easy to use object
     """
     dryers = []
     washers = []
     for row in rows:
-        state = get_machine_state(row)
-        machine = {
-            "number": get_machine_number(row),
-            "state": state.value,
-            "maxWeight": get_machine_weight(row),
-            "startTime": "",
-            "endTime": "",
-            "donePercent": "",
-            "remainingTime": "",
-            "program": "",
-        }
-        if state == State.RUNNING:
-            machine_times = get_machine_times(row)
-            machine["startTime"] = machine_times[0]
-            machine["endTime"] = machine_times[1]
-            if len(machine_times[0]) == 0:
-                state = State.RUNNING_NOT_STARTED
-                machine["state"] = state.value
-            machine["program"] = get_machine_program(row)
-            machine["donePercent"] = get_machine_done_percent(row)
-            machine["remainingTime"] = get_machine_remaining_time(row)
+        machine_number = get_machine_number(row)
+        if not is_machine_parsed(dryers, washers, machine_number):
+            state = get_machine_state(row)
+            machine = {
+                "number": machine_number,
+                "state": state.value,
+                "maxWeight": get_machine_weight(row),
+                "startTime": "",
+                "endTime": "",
+                "donePercent": "",
+                "remainingTime": "",
+                "program": "",
+            }
+            if state == State.RUNNING:
+                machine_times = get_machine_times(row)
+                machine["startTime"] = machine_times[0]
+                machine["endTime"] = machine_times[1]
+                if len(machine_times[0]) == 0:
+                    state = State.RUNNING_NOT_STARTED
+                    machine["state"] = state.value
+                machine["program"] = get_machine_program(row)
+                machine["donePercent"] = get_machine_done_percent(row)
+                machine["remainingTime"] = get_machine_remaining_time(row)
 
-        if is_machine_dryer(row):
-            dryers.append(machine)
-        else:
-            washers.append(machine)
-
+            if is_machine_dryer(row):
+                dryers.append(machine)
+            else:
+                washers.append(machine)
     return {
         "dryers": dryers,
         "washers": washers
