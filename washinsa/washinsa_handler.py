@@ -1,15 +1,19 @@
 # Parser made with BeautifulSoup4
 # https://www.crummy.com/software/BeautifulSoup/bs4/doc
+from json import JSONDecodeError
 
 from bs4 import BeautifulSoup
 import urllib.request
 from enum import Enum
 import re
 import json
+from datetime import datetime
+
+from typing.io import TextIO
 
 '''
 PAGE STRUCTURE
-as of june 2020
+as of july 2021
 
 A table with a row (tr html tag) for each machine
 Each machine row is composed of 6 columns
@@ -19,12 +23,20 @@ Each machine row is composed of 6 columns
  - 4 - Program (Name of the program or empty)
  - 5 - Start time (The start time in format HH:MM or empty)
  - 6 - End time (The end time in format HH:MM or empty)
+
+Custom message (errors displayed on the website)
+Must use the non-raw url to see it.
+In the <font> under the <div> of id msg-permanent
+example message: Perturbations operateur, laverie non connectee a internet depuis le 12/07/2021 a 19h45
 '''
 
 DUMP_FILE_INSA = "washinsa_data.json"
 DUMP_FILE_TRIPODE_B = "tripode_b_data.json"
-WASHINSA_URL = "https://www.proxiwash.com/weblaverie/component/weblaverie/?view=instancesfiche&format=raw&s="
+WASHINSA_RAW_URL = "https://www.proxiwash.com/weblaverie/component/weblaverie/?view=instancesfiche&format=raw&s="
+WASHINSA_URL = "https://www.proxiwash.com/weblaverie/ma-laverie-2?s="
 DRYER_STRING = "SECHE LINGE"
+# 10 min
+CUSTOM_MESSAGE_INTERVAL = 10 * 60 * 1000
 
 
 class State(Enum):
@@ -49,17 +61,53 @@ STATE_CONVERSION_TABLE = {
 TIME_RE = re.compile("^\d\d:\d\d$")
 
 
-def get_json(code):
+def get_json(code: str, file: TextIO):
+    file_json = {
+        "info": {},
+        "dryers": [],
+        "washers": []
+    }
+    try:
+        file_json = json.load(file)
+    except JSONDecodeError as e:
+        print("Error reading file " + file.name)
+        print(e)
+
+    info = file_json["info"]
+    if not ("last_checked" in info) or info[
+        "last_checked"] < datetime.now().timestamp() * 1000 - CUSTOM_MESSAGE_INTERVAL:
+        print("Updating proxiwash message")
+        info["message"] = get_message(code)
+        info["last_checked"] = datetime.now().timestamp() * 1000
+
+    parsed_data = get_machines(code)
+    file_json["dryers"] = parsed_data["dryers"]
+    file_json["washers"] = parsed_data["washers"]
+    return file_json
+
+
+def get_machines(code: str):
     soup = BeautifulSoup(download_page(code), 'html.parser')
     rows = get_rows(soup)
     return get_parsed_data(rows)
 
 
-def download_page(code):
+def get_message(code: str):
+    soup = BeautifulSoup(download_page(code, False), 'html.parser')
+    msg = soup.find(id="msg-permanent")
+    if msg:
+        return soup.find(id="msg-permanent").font.string
+    return None
+
+
+def download_page(code: str, raw=True):
     """
     Downloads the page from proxiwash website
     """
-    url = WASHINSA_URL + code
+    url = WASHINSA_RAW_URL + code
+    if not raw:
+        url = WASHINSA_URL + code
+
     try:
         with urllib.request.urlopen(url) as response:
             return response.read().decode()
@@ -68,7 +116,7 @@ def download_page(code):
         return ""
 
 
-def get_rows(soup):
+def get_rows(soup: BeautifulSoup):
     """
     Gets rows corresponding to machines on the page
     """
@@ -181,7 +229,7 @@ def get_machine_remaining_time(row):
     return time
 
 
-def is_machine_parsed(dryers, washers, number):
+def is_machine_parsed(dryers, washers, number: int):
     for m in dryers:
         if m["number"] == number:
             return True
@@ -232,11 +280,18 @@ def get_parsed_data(rows):
     }
 
 
+def write_json(data, f: TextIO):
+    f.seek(0)
+    f.truncate(0)
+    json.dump(data, f)
+
+
 def main():
-    with open(DUMP_FILE_INSA, 'w') as f:
-        json.dump(get_json("cf4f39"), f)
-    with open(DUMP_FILE_TRIPODE_B, 'w') as f:
-        json.dump(get_json("b310b7"), f)
+    dump_data = {}
+    with open(DUMP_FILE_INSA, 'r+', encoding='utf-8') as f:
+        write_json(get_json("cf4f39", f), f)
+    with open(DUMP_FILE_TRIPODE_B, 'r+', encoding='utf-8') as f:
+        write_json(get_json("b310b7", f), f)
 
 
 main()
