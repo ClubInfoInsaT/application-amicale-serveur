@@ -73,13 +73,15 @@ def get_json(code: str, file: TextIO):
         print("Error reading file " + file.name)
         print(e)
 
+    if not ("info" in file_json):
+        file_json["info"] = {}
+
     info = file_json["info"]
     if not ("last_checked" in info) or info[
         "last_checked"] < datetime.now().timestamp() * 1000 - CUSTOM_MESSAGE_INTERVAL:
         print("Updating proxiwash message")
         info["message"] = get_message(code)
         info["last_checked"] = datetime.now().timestamp() * 1000
-
     parsed_data = get_machines(code)
     file_json["dryers"] = parsed_data["dryers"]
     file_json["washers"] = parsed_data["washers"]
