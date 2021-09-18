@@ -66,9 +66,12 @@ Pour cela, il faut tout réinstaller dans ce dossier comme suit:
 ```shell
 ssh amicale_app@etud.insa-toulouse.fr
 cd public_html
-git clone https://github.com/ClubInfoInsaT/application-amicale-serveur v<NUMERO_DE_VERSION>
+git clone https://github.com/ClubInfoInsaT/application-amicale-serveur.git v<NUMERO_DE_VERSION>
 cd v<NUMERO_DE_VERSION>
 ```
+
+Noter que la commande `git clone` utilise le lien HTTPS et non pas SSH, car le serveur refuse les connexions SSH autre que pour les sessions.
+
 Ensuite, créez le venv:
 ```shell
 python3 -m venv venv
