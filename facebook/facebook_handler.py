@@ -29,7 +29,11 @@ def get_all_data():
     data = {}
     for page in PAGES:
         print("   -> " + page)
-        data[page] = scrape_data(page)
+        # On ne parse que campus car l'amicale ne marche pas
+        if page != "amicale.deseleves":
+            data[page] = scrape_data(page)
+        else:
+            data[page] = []
     return data
 
 
