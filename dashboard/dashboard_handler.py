@@ -14,7 +14,7 @@ FACEBOOK_LOCK = '../facebook/lock'
 
 PROXIMO_URL = 'https://etud.insa-toulouse.fr/~proximo/data/stock-v2.json'
 TUTORINSA_URL = 'https://etud.insa-toulouse.fr/~tutorinsa/api/get_data.php'
-PLANNING_URL = 'https://amicale-insat.fr/event/json/list'
+PLANNING_URL = 'https://amicale-insat.fr/api/event/list'
 
 DASHBOARD_FILE = 'dashboard_data.json'
 
