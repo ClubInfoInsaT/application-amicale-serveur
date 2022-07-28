@@ -40,6 +40,9 @@
 * * * * * cd "$HOME"/public_html/v2/dashboard && (sleep 20 ; ./dashboard_update.sh) >/dev/null 2>&1
 * * * * * cd "$HOME"/public_html/v2/dashboard && (sleep 40 ; ./dashboard_update.sh) >/dev/null 2>&1
 
+# Update planex down status every minute
+1 * * * * cd "$HOME"/public_html/v2/planex/ && ./planex_update.sh >/dev/null 2>&1
+
 # To stop emails, add the following at the end of each command:
 # >/dev/null 2>&1
 
