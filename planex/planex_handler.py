@@ -17,7 +17,7 @@ def is_planex_down() -> bool:
             return is_down
     except:
         print("Error processing following url: " + PLANEX_URL)
-        return 0
+        return True
 
 
 def get_json(file: TextIO) -> dict:
