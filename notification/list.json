@@ -1,0 +1,4 @@
+[{"id":2,"title":"Notification no 2","date":"2022-11-16 18:30",
+"description":"<p>super notif. Go voir <a href=\"foo\">cet event</a>.<br><\/p><p><em>aaaaah</em>","from":"Présidence"},
+{"id":1,"title":"Primera notif","date":"2022-11-23 18:30",
+"description":"<p>super notif</p>","from":"L'équipe de dev de l'Amicale"}]
