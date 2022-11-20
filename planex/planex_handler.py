@@ -2,6 +2,7 @@ from typing import TextIO
 import urllib.request
 import json
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 
 DUMP_FILE_PLANEX = "planex.json"
@@ -10,11 +11,19 @@ PLANEX_URL = "http://planex.insa-toulouse.fr/"
 CUSTOM_MESSAGE_INTERVAL = 10 * 60 * 1000
 
 
+def parse_html(html_string: str) -> BeautifulSoup:
+    return BeautifulSoup(html_string, "html.parser")
+
 def is_planex_down() -> bool:
     try:
         with urllib.request.urlopen(PLANEX_URL) as response:
-            is_down = response.getcode() != 200
-            return is_down
+            if response.getcode() != 200:
+                return False
+            else:
+                html = parse_html(response.read())
+                title = html.find("title")
+                # Note that there's no title tag in the HTML when planex is working normally
+                return title != None and title.text == "503 Service Unavailable"
     except:
         print("Error processing following url: " + PLANEX_URL)
         return True
