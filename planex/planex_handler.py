@@ -58,7 +58,10 @@ def write_json(data: dict, f: TextIO):
 
 
 def main():
-    with open(DUMP_FILE_PLANEX, "a+", encoding='utf-8') as f:
+    # w+ : Opens a file for both writing and reading. Overwrites the existing
+    # file if the file exists. If the file does not exist, it creates a new
+    # file for reading and writing
+    with open(DUMP_FILE_PLANEX, "w+", encoding='utf-8') as f:
         write_json(get_json(f), f)
 
 
