@@ -34,7 +34,6 @@ def get_json(file: TextIO) -> dict:
         "info": {},
         "isPlanexDown": None
     }
-    file.seek(0)
     content = file.read()
     if content:
         file_json = json.loads(content)
@@ -58,10 +57,9 @@ def write_json(data: dict, f: TextIO):
 
 
 def main():
-    # w+ : Opens a file for both writing and reading. Overwrites the existing
-    # file if the file exists. If the file does not exist, it creates a new
-    # file for reading and writing
-    with open(DUMP_FILE_PLANEX, "w+", encoding='utf-8') as f:
+    # r+ : Opens a file for both reading and writing. The file pointer will be
+    # at the beginning of the file. Bash script ensures file is created.
+    with open(DUMP_FILE_PLANEX, "r+", encoding='utf-8') as f:
         write_json(get_json(f), f)
 
 
