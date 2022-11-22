@@ -17,7 +17,7 @@ def parse_html(html_string: str) -> BeautifulSoup:
 def is_planex_down() -> bool:
     try:
         with urllib.request.urlopen(PLANEX_URL) as response:
-            if response.getcode() == 200:
+            if response.getcode() != 200:
                 return True
             else:
                 html = parse_html(response.read())
