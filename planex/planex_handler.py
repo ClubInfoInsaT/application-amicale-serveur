@@ -17,8 +17,8 @@ def parse_html(html_string: str) -> BeautifulSoup:
 def is_planex_down() -> bool:
     try:
         with urllib.request.urlopen(PLANEX_URL) as response:
-            if response.getcode() != 200:
-                return False
+            if response.getcode() == 200:
+                return True
             else:
                 html = parse_html(response.read())
                 title = html.find("title")
@@ -34,11 +34,10 @@ def get_json(file: TextIO) -> dict:
         "info": {},
         "isPlanexDown": None
     }
-    try:
-        file_json = json.load(file)
-    except json.JSONDecodeError as e:
-        print("Error reading file " + file.name)
-        print(e)
+    file.seek(0)
+    content = file.read()
+    if content:
+        file_json = json.loads(content)
 
     if not ("info" in file_json):
         file_json["info"] = {}
@@ -46,7 +45,8 @@ def get_json(file: TextIO) -> dict:
     info = file_json["info"]
     if not ("last_checked" in info) or info[
             "last_checked"] < datetime.now().timestamp() * 1000 - CUSTOM_MESSAGE_INTERVAL:
-        info["last_checked"] = datetime.now().timestamp() * 1000
+        info["last_checked"] = int(datetime.now().timestamp() * 1000)
+    file_json["info"] = info
     file_json["isPlanexDown"] = is_planex_down()
     return file_json
 
@@ -58,7 +58,7 @@ def write_json(data: dict, f: TextIO):
 
 
 def main():
-    with open(DUMP_FILE_PLANEX, 'w+', encoding='utf-8') as f:
+    with open(DUMP_FILE_PLANEX, "a+", encoding='utf-8') as f:
         write_json(get_json(f), f)
 
 
