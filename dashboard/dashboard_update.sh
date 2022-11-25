@@ -3,6 +3,9 @@
 # Update washing machines
 cd "$HOME"/public_html/v2/washinsa && ./washinsa_update.sh
 
+# Update notifications
+cd "$HOME"/public_html/v2/notification && ./notification_update.sh
+
 cd "$HOME"/public_html/v2/dashboard || exit
 
 source ../venv/bin/activate
