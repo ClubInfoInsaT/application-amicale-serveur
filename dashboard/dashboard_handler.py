@@ -6,11 +6,13 @@ import os.path
 WASHINSA_FILE = '../washinsa/washinsa_data.json'
 MENU_FILE = '../menu/menu_data.json'
 FACEBOOK_FILE = '../facebook/facebook_data.json'
+NOTIFICATION_FILE = '../notification/list.json'
 
 
 WASHINSA_LOCK = '../washinsa/lock'
 MENU_LOCK = '../menu/lock'
 FACEBOOK_LOCK = '../facebook/lock'
+NOTIFICATION_LOCK = '../notification/lock'
 
 PROXIMO_URL = 'https://etud.insa-toulouse.fr/~proximo/data/stock-v2.json'
 TUTORINSA_URL = 'https://etud.insa-toulouse.fr/~tutorinsa/api/get_data.php'
@@ -137,6 +139,26 @@ def get_today_events():
         print("Error processing following url: " + PLANNING_URL)
         return []
 
+def get_latest_notification():
+    """
+    Get latest push notification
+
+    :return: the id of the latest notification
+    """
+    # Prevent concurrent access to file
+    while os.path.isfile(NOTIFICATION_LOCK):
+        print("Waiting for notification lock")
+    try:
+        with open(NOTIFICATION_FILE) as f:
+            data = json.load(f)
+            if len(data) > 0:
+                return data[0]["id"]
+            else:
+                return 0
+    except FileNotFoundError:
+        print("Could not find " + MENU_FILE)
+        return []
+
 def generate_dashboard_json():
     """
     Generate the actual dashboard
@@ -152,7 +174,8 @@ def generate_dashboard_json():
             'available_washers': available_machines[1],
             'available_tutorials': available_tutorials,
             'today_menu': get_today_menu(),
-            'proximo_articles': get_proximo_article_number()
+            'proximo_articles': get_proximo_article_number(),
+            'latest_notification': get_latest_notification()
         },
         'news_feed': get_news_feed()
     }
