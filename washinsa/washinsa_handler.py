@@ -55,10 +55,10 @@ def remaining_time(start_time: str, end_time: str) -> int:
     Returns:
         The remaining time of the washer.
     """
-    start_time = datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")
     end_time = datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S")
-    remaining_time = end_time - start_time
-    return int(remaining_time.total_seconds() / 60)
+    remaining_time = end_time - datetime.now()
+    remaining_time_minutes = int(remaining_time.total_seconds() / 60)
+    return 0 if remaining_time_minutes < 0 else remaining_time_minutes
 
 
 def craft_url(code: str):
