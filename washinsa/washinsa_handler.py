@@ -36,7 +36,7 @@ def get_machine_state(string: str):
         return State.RUNNING
     elif string == "RÉGLÉ":
         return State.RUNNING_NOT_STARTED
-    elif string == "HS":
+    elif string == "HORS SERVICE":
         return State.UNAVAILABLE
     elif string == "TERMINÉ":
         return State.FINISHED
