@@ -75,8 +75,9 @@ def fetch_data(code: str):
         The raw data from the website.
     """
     url = craft_url(code)
+    headers = {'Origin': 'https://beta.proxiwash.com'}
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         return response.json()
     except:
         print("Error processing following url: " + url)
