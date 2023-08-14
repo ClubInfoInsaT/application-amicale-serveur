@@ -80,8 +80,12 @@ def fetch_data(code: str):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'
     }
     try:
+        print('Fetching data from : ' + url)
         response = requests.get(url, headers=headers)
-        return response.json()
+        print('Response status code : ' + str(response.status_code))
+        json_data = response.json()
+        print('Response json data : ' + str(json_data))
+        return json_data
     except:
         print("Error processing following url: " + url)
         return ""
