@@ -62,7 +62,7 @@ def remaining_time(start_time: str, end_time: str) -> int:
 
 
 def craft_url(code: str):
-    return f"https://api.cogedia.com/laveries/{code}/machines?machinestype=0&machinesvue=laverie&version=2"
+    return f"https://api2.cogedia.com/laveries/{code}/machines?machinestype=0&machinesvue=laverie&version=2"
 
 
 def fetch_data(code: str):
